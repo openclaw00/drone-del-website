@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RedWing Express — Order Tracking</title>
+    <meta name="description" content="Track a RedWing Express drone delivery with order details, ETA, live status, and route milestones." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="grid-overlay"></div>
+    <header class="site-header glass">
+      <a class="brand" href="index.html">
+        <span class="brand-mark"></span>
+        <span>RedWing Express</span>
+      </a>
+      <nav>
+        <a href="index.html#services">Services</a>
+        <a href="index.html#coverage">Coverage</a>
+        <a href="index.html#booking">Book</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+      <a class="button primary small" href="index.html#booking">New delivery</a>
+    </header>
+
+    <main class="section order-page">
+      <section class="order-hero glass reveal visible">
+        <div>
+          <p class="eyebrow">Live shipment</p>
+          <h1 id="orderTitle">Tracking your delivery</h1>
+          <p class="lede" id="orderSubtitle">Dispatch confirmed. Live route and shipment details are shown below.</p>
+        </div>
+        <div class="order-id-box">
+          <span class="card-label">Tracking ID</span>
+          <strong id="trackingIdDisplay">RWX-000000</strong>
+        </div>
+      </section>
+
+      <section class="order-layout">
+        <div class="order-main">
+          <div class="order-map-card glass reveal visible">
+            <div class="order-map-header">
+              <div>
+                <span class="card-label">Live route map</span>
+                <strong id="liveStatus">Drone preparing for departure</strong>
+              </div>
+              <span class="status-pill" id="etaPill">ETA 14 min</span>
+            </div>
+            <iframe
+              class="order-live-map"
+              title="Order live route map"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              src="https://www.google.com/maps?q=Reigate%20Grammar%20School%20Vietnam&z=15&output=embed"
+            ></iframe>
+          </div>
+
+          <div class="timeline-card glass reveal visible">
+            <p class="card-label">Route milestones</p>
+            <div class="timeline" id="timelineSteps">
+              <div class="timeline-step active"><span></span><div><strong>Dispatch confirmed</strong><p>Order accepted by operations team</p></div></div>
+              <div class="timeline-step active"><span></span><div><strong>Drone assigned</strong><p>Aircraft and operator allocated</p></div></div>
+              <div class="timeline-step"><span></span><div><strong>In flight</strong><p>Shipment en route to destination</p></div></div>
+              <div class="timeline-step"><span></span><div><strong>Approaching dropoff</strong><p>Recipient alert sent automatically</p></div></div>
+              <div class="timeline-step"><span></span><div><strong>Delivered</strong><p>Proof of completion available</p></div></div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="order-sidebar">
+          <div class="order-summary glass reveal visible">
+            <p class="card-label">Shipment details</p>
+            <div class="summary-list">
+              <div><span>Pickup</span><strong id="pickupValue">—</strong></div>
+              <div><span>Dropoff</span><strong id="dropoffValue">—</strong></div>
+              <div><span>Package</span><strong id="packageValue">—</strong></div>
+              <div><span>Weight</span><strong id="weightValue">—</strong></div>
+              <div><span>Speed</span><strong id="speedValue">—</strong></div>
+              <div><span>Contact</span><strong id="phoneValue">—</strong></div>
+            </div>
+          </div>
+
+          <div class="order-summary glass reveal visible">
+            <p class="card-label">Operations</p>
+            <div class="summary-list">
+              <div><span>Assigned drone</span><strong id="droneValue">RW-07</strong></div>
+              <div><span>Operator</span><strong id="operatorValue">Hadrien Dupasquier</strong></div>
+              <div><span>Route class</span><strong id="routeClassValue">Urban priority</strong></div>
+              <div><span>Estimated fare</span><strong id="fareValue">$25</strong></div>
+            </div>
+            <p class="order-notes" id="notesValue">No special handling notes submitted.</p>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <script src="order.js"></script>
+  </body>
+</html>
