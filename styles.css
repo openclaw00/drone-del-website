@@ -79,11 +79,10 @@ body {
 }
 
 .brand-mark {
-  width: 12px;
-  height: 12px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, var(--red), #ff8181);
-  box-shadow: 0 0 18px var(--red-glow);
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  object-fit: contain;
 }
 
 .site-header nav {
