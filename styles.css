@@ -776,3 +776,62 @@ textarea::placeholder { color: #8f95a3; }
   white-space: nowrap;
   font-family: var(--font-mono);
 }
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.team-card {
+  padding: 26px;
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+
+.team-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(255, 59, 59, 0.12);
+  border: 1px solid rgba(255, 59, 59, 0.3);
+  color: #ffc4c4;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.founder-avatar {
+  background: rgba(255, 59, 59, 0.22);
+  border-color: rgba(255, 59, 59, 0.55);
+  box-shadow: 0 0 24px rgba(255, 59, 59, 0.2);
+  color: #fff;
+  width: 72px;
+  height: 72px;
+  font-size: 1.2rem;
+}
+
+.team-role {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #ffb7b7;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 1020px) {
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+}
