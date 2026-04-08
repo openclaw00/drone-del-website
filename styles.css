@@ -748,3 +748,21 @@ textarea::placeholder { color: #8f95a3; }
 
   h1 { font-size: 3.1rem; }
 }
+
+.live-ops-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.ops-pill {
+  display: inline-block;
+  padding: 4px 10px;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 6px;
+  background: rgba(255,255,255,0.07);
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
