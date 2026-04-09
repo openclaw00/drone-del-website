@@ -832,3 +832,55 @@ textarea::placeholder { color: #8f95a3; }
     grid-template-columns: 1fr;
   }
 }
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.pricing-card {
+  padding: 26px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+}
+
+.pricing-card h3 {
+  margin-bottom: 8px;
+}
+
+.service-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  color: #ffb7b7;
+  margin-bottom: 12px;
+}
+
+.pricing-card p {
+  color: var(--muted);
+  line-height: 1.6;
+  flex-grow: 1;
+  margin-bottom: 12px;
+}
+
+.price {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--text);
+  font-size: 1.05rem;
+  margin-top: auto;
+}
+
+@media (max-width: 1020px) {
+  .pricing-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+}
