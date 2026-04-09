@@ -23,7 +23,7 @@ body {
   margin: 0;
   font-family: "Inter", system-ui, sans-serif;
   --font-display: "Space Grotesk", system-ui, sans-serif;
-  --font-mono: "Space Mono", monospace;
+  --font-mono: "JetBrains Mono", monospace;
   color: var(--text);
   background: linear-gradient(180deg, #f9f9fb 0%, #ffffff 100%);
 }
