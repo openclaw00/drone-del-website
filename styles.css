@@ -290,13 +290,8 @@ h3 {
   overflow: hidden;
 }
 
-.radar-map {
-  z-index: 0;
-}
-
-.radar-map-overlay {
-  display: none;
-}
+.radar-map { z-index: 0; }
+.radar-map-overlay { display: none; }
 
 .drone-marker {
   position: absolute;
@@ -335,18 +330,9 @@ h3 {
 .marker-6 { left: 58%; top: 74%; animation-delay: 1.5s; }
 
 @keyframes drone-ping {
-  0% {
-    box-shadow: 0 0 0 0 rgba(255, 75, 75, 0.7);
-    transform: scale(1);
-  }
-  70% {
-    box-shadow: 0 0 0 14px rgba(255, 75, 75, 0);
-    transform: scale(1.08);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(255, 75, 75, 0);
-    transform: scale(1);
-  }
+  0%   { box-shadow: 0 0 0 0 rgba(255, 75, 75, 0.7); transform: scale(1); }
+  70%  { box-shadow: 0 0 0 14px rgba(255, 75, 75, 0); transform: scale(1.08); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 75, 75, 0); transform: scale(1); }
 }
 
 .radar::after {
@@ -364,12 +350,10 @@ h3 {
 
 @keyframes radar-spin {
   from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-.route-stats {
-  gap: 14px;
-}
+.route-stats { gap: 14px; }
 
 .route-stats > div,
 .metric {
@@ -442,9 +426,7 @@ h3 {
   border: 0;
 }
 
-.map-overlay {
-  display: none;
-}
+.map-overlay { display: none; }
 
 .map-core,
 .map-ring,
@@ -499,9 +481,7 @@ label {
   color: var(--text);
 }
 
-.booking-form > label {
-  margin-bottom: 18px;
-}
+.booking-form > label { margin-bottom: 18px; }
 
 input,
 select,
@@ -540,17 +520,11 @@ textarea::placeholder { color: #9ca3af; }
   gap: 18px;
 }
 
-.tracking-form input {
-  min-width: 260px;
-}
+.tracking-form input { min-width: 260px; }
 
-.trust-grid-large {
-  grid-template-columns: repeat(2, 1fr);
-}
+.trust-grid-large { grid-template-columns: repeat(2, 1fr); }
 
-.contact-card {
-  text-align: center;
-}
+.contact-card { text-align: center; }
 
 .contact-actions {
   justify-content: center;
@@ -560,9 +534,7 @@ textarea::placeholder { color: #9ca3af; }
 .reveal {
   opacity: 0;
   transform: translateY(20px);
-  transition:
-    opacity 500ms ease,
-    transform 500ms ease;
+  transition: opacity 500ms ease, transform 500ms ease;
   will-change: opacity, transform;
 }
 
@@ -587,14 +559,12 @@ textarea::placeholder { color: #9ca3af; }
     grid-template-columns: 1fr;
   }
 
-  .tracking-panel {
-    display: grid;
-  }
+  .tracking-panel { display: grid; }
 }
 
-.order-page {
-  min-height: 100vh;
-}
+/* ── Order page ── */
+
+.order-page { min-height: 100vh; }
 
 .order-hero {
   width: min(calc(100% - 32px), var(--max));
@@ -629,10 +599,7 @@ textarea::placeholder { color: #9ca3af; }
 }
 
 .order-main,
-.order-sidebar {
-  display: grid;
-  gap: 18px;
-}
+.order-sidebar { display: grid; gap: 18px; }
 
 .order-map-card,
 .timeline-card,
@@ -656,10 +623,7 @@ textarea::placeholder { color: #9ca3af; }
   border-radius: 18px;
 }
 
-.timeline {
-  display: grid;
-  gap: 18px;
-}
+.timeline { display: grid; gap: 18px; }
 
 .timeline-step {
   display: grid;
@@ -691,14 +655,9 @@ textarea::placeholder { color: #9ca3af; }
   color: var(--text);
 }
 
-.timeline-step p {
-  margin: 0;
-}
+.timeline-step p { margin: 0; }
 
-.summary-list {
-  display: grid;
-  gap: 14px;
-}
+.summary-list { display: grid; gap: 14px; }
 
 .summary-list > div {
   display: flex;
@@ -708,13 +667,8 @@ textarea::placeholder { color: #9ca3af; }
   border-bottom: 1px solid var(--line);
 }
 
-.summary-list span {
-  color: var(--muted);
-}
-
-.summary-list strong {
-  text-align: right;
-}
+.summary-list span { color: var(--muted); }
+.summary-list strong { text-align: right; }
 
 .order-notes {
   margin-top: 18px;
@@ -723,25 +677,13 @@ textarea::placeholder { color: #9ca3af; }
 }
 
 @media (max-width: 1020px) {
-  .order-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .order-hero {
-    flex-direction: column;
-    align-items: stretch;
-  }
+  .order-layout { grid-template-columns: 1fr; }
+  .order-hero { flex-direction: column; align-items: stretch; }
 }
 
 @media (max-width: 760px) {
-  .site-header {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .site-header nav {
-    justify-content: center;
-  }
+  .site-header { flex-direction: column; align-items: stretch; }
+  .site-header nav { justify-content: center; }
 
   .hero-actions,
   .contact-actions,
@@ -752,12 +694,12 @@ textarea::placeholder { color: #9ca3af; }
   }
 
   .button,
-  .tracking-form input {
-    width: 100%;
-  }
+  .tracking-form input { width: 100%; }
 
   h1 { font-size: 3.1rem; }
 }
+
+/* ── Misc components ── */
 
 .live-ops-pills {
   display: flex;
@@ -825,6 +767,13 @@ textarea::placeholder { color: #9ca3af; }
   margin-bottom: 10px;
 }
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   PRICING GRID + SPOTLIGHT / GLOW CARD
+   Ported from the React GlowCard component. JS (script.js) tracks pointermove
+   and writes --x / --y / --xp onto every .pricing-card in real time so the
+   radial-gradient spotlight follows the cursor across the whole section.
+   ───────────────────────────────────────────────────────────────────────────── */
+
 .pricing-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -836,11 +785,99 @@ textarea::placeholder { color: #9ca3af; }
   border-radius: var(--radius-lg);
   display: flex;
   flex-direction: column;
+  position: relative;
+  overflow: visible;
+
+  /* ── spotlight config (overridden per-card below) ── */
+  --glow-base:   0;
+  --glow-spread: 20;
+  --glow-size:   260;
+  --glow-border: 2;
+  --border-sz:   calc(var(--glow-border) * 1px);
+  --spot-sz:     calc(var(--glow-size) * 1px);
+  --hue:         calc(var(--glow-base) + (var(--xp, 0.5) * var(--glow-spread)));
+
+  /* spotlight body fill (very subtle) */
+  background-image: radial-gradient(
+    var(--spot-sz) var(--spot-sz) at
+    calc(var(--x, -9999) * 1px) calc(var(--y, -9999) * 1px),
+    hsl(var(--hue) 100% 62% / 0.07),
+    transparent
+  );
+  background-color: var(--panel);
+  background-attachment: fixed;
+
+  /* transparent border — the ::before/::after draw the glow onto it */
+  border: var(--border-sz) solid transparent;
+  box-shadow: var(--shadow);
+  transition: transform 300ms ease, box-shadow 300ms ease;
 }
 
-.pricing-card h3 {
-  margin-bottom: 8px;
+/* ── glowing border highlight (coloured) ── */
+.pricing-card::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: calc(var(--border-sz) * -1);
+  border: var(--border-sz) solid transparent;
+  border-radius: var(--radius-lg);
+  background-image: radial-gradient(
+    calc(var(--spot-sz) * 0.75) calc(var(--spot-sz) * 0.75) at
+    calc(var(--x, -9999) * 1px) calc(var(--y, -9999) * 1px),
+    hsl(var(--hue) 100% 55% / 1),
+    transparent 100%
+  );
+  background-attachment: fixed;
+  background-size: calc(100% + (2 * var(--border-sz))) calc(100% + (2 * var(--border-sz)));
+  background-position: 50% 50%;
+  filter: brightness(2);
+  mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
+  mask-clip: padding-box, border-box;
+  mask-composite: intersect;
+  -webkit-mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
+  -webkit-mask-clip: padding-box, border-box;
+  -webkit-mask-composite: destination-in;
 }
+
+/* ── glowing border highlight (white shimmer) ── */
+.pricing-card::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: calc(var(--border-sz) * -1);
+  border: var(--border-sz) solid transparent;
+  border-radius: var(--radius-lg);
+  background-image: radial-gradient(
+    calc(var(--spot-sz) * 0.45) calc(var(--spot-sz) * 0.45) at
+    calc(var(--x, -9999) * 1px) calc(var(--y, -9999) * 1px),
+    hsl(0 100% 100% / 0.65),
+    transparent 100%
+  );
+  background-attachment: fixed;
+  background-size: calc(100% + (2 * var(--border-sz))) calc(100% + (2 * var(--border-sz)));
+  background-position: 50% 50%;
+  mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
+  mask-clip: padding-box, border-box;
+  mask-composite: intersect;
+  -webkit-mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
+  -webkit-mask-clip: padding-box, border-box;
+  -webkit-mask-composite: destination-in;
+}
+
+.pricing-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.13);
+}
+
+/* Per-card hue tweak — staying in the warm red/orange family to match brand */
+.pricing-card:nth-child(1) { --glow-base: 0;   --glow-spread: 15; }
+.pricing-card:nth-child(2) { --glow-base: 350; --glow-spread: 20; }
+.pricing-card:nth-child(3) { --glow-base: 12;  --glow-spread: 15; }
+.pricing-card:nth-child(4) { --glow-base: 340; --glow-spread: 25; }
+
+/* ── pricing card content ── */
+
+.pricing-card h3 { margin-bottom: 8px; }
 
 .service-name {
   font-family: var(--font-display);
@@ -867,14 +904,10 @@ textarea::placeholder { color: #9ca3af; }
 
 @media (max-width: 1020px) {
   .team-grid,
-  .pricing-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .pricing-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 760px) {
   .team-grid,
-  .pricing-grid {
-    grid-template-columns: 1fr;
-  }
+  .pricing-grid { grid-template-columns: 1fr; }
 }
