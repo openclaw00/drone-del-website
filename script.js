@@ -13,10 +13,9 @@ const observer = new IntersectionObserver(
 );
 document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
 
-// ── Spotlight — all .glass cards ─────────────────────────────────────────────
-// Single mousemove on document so it always fires regardless of child elements.
-// For each .glass card we check if the cursor is inside it, update coords, and
-// toggle the spotlight on/off via --mouse-opacity.
+// ── Spotlight + neon border glow — all .glass cards ───────────────────────────
+// ::before  = soft radial fill that follows the cursor (CSS handles this)
+// box-shadow = neon border glow that concentrates on the side closest to cursor
 
 const glassCards = document.querySelectorAll('.glass');
 
@@ -26,15 +25,39 @@ document.addEventListener('mousemove', (e) => {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     const inside = x >= 0 && y >= 0 && x <= rect.width && y <= rect.height;
+
+    // Update fill spotlight position always (CSS reads these)
     card.style.setProperty('--mouse-x', `${x}px`);
     card.style.setProperty('--mouse-y', `${y}px`);
     card.style.setProperty('--mouse-opacity', inside ? '1' : '0');
+
+    if (inside) {
+      // Normalise to -1..1 from card center
+      const nx = (x / rect.width  - 0.5) * 2;   // -1 = left edge, +1 = right edge
+      const ny = (y / rect.height - 0.5) * 2;   // -1 = top edge,  +1 = bottom edge
+
+      // The neon glow offset: shift toward the cursor side
+      const offsetX = nx * 10;
+      const offsetY = ny * 10;
+      const blur    = 18;
+      const spread  = 2;
+      const alpha   = 0.85;
+
+      card.style.setProperty('--glow-shadow',
+        `0 0 0 1px rgba(255,59,59,0.25),
+         ${offsetX}px ${offsetY}px ${blur}px ${spread}px rgba(255,59,59,${alpha}),
+         ${offsetX * 0.5}px ${offsetY * 0.5}px ${blur * 2}px ${spread * 3}px rgba(255,100,80,0.3)`
+      );
+    } else {
+      card.style.setProperty('--glow-shadow', 'none');
+    }
   });
 });
 
 document.addEventListener('mouseleave', () => {
   glassCards.forEach((card) => {
     card.style.setProperty('--mouse-opacity', '0');
+    card.style.setProperty('--glow-shadow', 'none');
   });
 });
 
