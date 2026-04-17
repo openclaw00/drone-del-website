@@ -1,3 +1,84 @@
+// ── Dot grid ──────────────────────────────────────────────────────────────────
+(function () {
+  const canvas = document.getElementById('dot-grid');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  const SPACING = 16;
+  const RADIUS = 1.5;
+  const GLOW_RADIUS = 140;
+  const BASE_ALPHA = 0.13;
+  const SIZE_BOOST = 0.35;
+
+  let mouse = { x: -9999, y: -9999 };
+  let dots = [];
+  let W, H;
+
+  function resize() {
+    W = canvas.width  = window.innerWidth  * devicePixelRatio;
+    H = canvas.height = window.innerHeight * devicePixelRatio;
+    canvas.style.width  = window.innerWidth  + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+    buildGrid();
+  }
+
+  function buildGrid() {
+    dots = [];
+    const s = SPACING * devicePixelRatio;
+    const offX = (W % s) / 2;
+    const offY = (H % s) / 2;
+    for (let x = offX; x < W; x += s)
+      for (let y = offY; y < H; y += s)
+        dots.push({ x, y });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    const gr = GLOW_RADIUS * devicePixelRatio;
+    const mx = mouse.x * devicePixelRatio;
+    const my = mouse.y * devicePixelRatio;
+
+    for (const dot of dots) {
+      const dx = dot.x - mx;
+      const dy = dot.y - my;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      const t = Math.max(0, 1 - dist / gr);
+      const eased = t * t * (3 - 2 * t);
+
+      const alpha = BASE_ALPHA + (1 - BASE_ALPHA) * eased;
+      const r = RADIUS * devicePixelRatio * (1 + eased * SIZE_BOOST);
+
+      ctx.beginPath();
+      ctx.arc(dot.x, dot.y, r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,255,255,' + alpha.toFixed(3) + ')';
+      ctx.fill();
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('mousemove', function (e) {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  });
+  window.addEventListener('mouseleave', function () {
+    mouse.x = -9999;
+    mouse.y = -9999;
+  });
+  window.addEventListener('touchmove', function (e) {
+    mouse.x = e.touches[0].clientX;
+    mouse.y = e.touches[0].clientY;
+  }, { passive: true });
+  window.addEventListener('touchend', function () {
+    mouse.x = -9999;
+    mouse.y = -9999;
+  });
+
+  window.addEventListener('resize', resize);
+  resize();
+  draw();
+})();
+
 // ── Scroll reveal ─────────────────────────────────────────────────────────────
 const observer = new IntersectionObserver(
   (entries) => {
@@ -25,7 +106,6 @@ const state = glassCards.map(() => ({
   mx: 0, my: 0,
 }));
 
-// Track raw mouse position in viewport coords at all times
 let mouseX = -9999;
 let mouseY = -9999;
 
@@ -47,8 +127,8 @@ function updateCards() {
       state[i].ty = ny * 12;
     }
 
-    card.style.setProperty('--mouse-x', `${x}px`);
-    card.style.setProperty('--mouse-y', `${y}px`);
+    card.style.setProperty('--mouse-x', x + 'px');
+    card.style.setProperty('--mouse-y', y + 'px');
     card.style.setProperty('--mouse-opacity', inside ? '1' : '0');
   });
 }
@@ -59,7 +139,6 @@ document.addEventListener('mousemove', (e) => {
   updateCards();
 });
 
-// Re-run on scroll so cards light up when cursor is stationary but page moves
 window.addEventListener('scroll', updateCards, { passive: true });
 
 document.addEventListener('mouseleave', () => {
@@ -71,7 +150,6 @@ document.addEventListener('mouseleave', () => {
   });
 });
 
-// Lerp loop
 const LERP_SPEED = 0.07;
 function lerp(a, b, t) { return a + (b - a) * t; }
 
@@ -87,9 +165,9 @@ function tick() {
       card.style.boxShadow = '';
     } else {
       card.style.boxShadow =
-        `0 0 0 1px rgba(255,59,59,${(a * 0.2).toFixed(3)}),` +
-        `${s.ox}px ${s.oy}px 20px 2px rgba(255,59,59,${(a * 0.7).toFixed(3)}),` +
-        `${s.ox * 0.4}px ${s.oy * 0.4}px 40px 6px rgba(255,100,80,${(a * 0.25).toFixed(3)})`;
+        '0 0 0 1px rgba(255,59,59,' + (a * 0.2).toFixed(3) + '),' +
+        s.ox + 'px ' + s.oy + 'px 20px 2px rgba(255,59,59,' + (a * 0.7).toFixed(3) + '),' +
+        (s.ox * 0.4) + 'px ' + (s.oy * 0.4) + 'px 40px 6px rgba(255,100,80,' + (a * 0.25).toFixed(3) + ')';
     }
   });
   requestAnimationFrame(tick);
@@ -101,7 +179,7 @@ const bookingForm   = document.getElementById('bookingForm');
 const trackingInput = document.getElementById('trackingInput');
 const trackButton   = document.getElementById('trackButton');
 
-const buildTrackingId = () => `RWX-${Math.floor(100000 + Math.random() * 900000)}`;
+const buildTrackingId = () => 'RWX-' + Math.floor(100000 + Math.random() * 900000);
 
 if (bookingForm) {
   bookingForm.addEventListener('submit', (event) => {
@@ -118,7 +196,7 @@ if (bookingForm) {
       phone:       formData.get('phone')       || '',
       notes:       formData.get('notes')       || ''
     });
-    window.location.href = `order.html?${params.toString()}`;
+    window.location.href = 'order.html?' + params.toString();
   });
 }
 
@@ -126,6 +204,6 @@ if (trackButton && trackingInput) {
   trackButton.addEventListener('click', () => {
     const id = trackingInput.value.trim() || buildTrackingId();
     const params = new URLSearchParams({ id });
-    window.location.href = `order.html?${params.toString()}`;
+    window.location.href = 'order.html?' + params.toString();
   });
 }

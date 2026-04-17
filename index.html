@@ -22,7 +22,9 @@
     <link rel="manifest" href="site.webmanifest">
   </head>
   <body>
-    <div class="grid-overlay"></div>
+    <div class="grid-overlay">
+      <canvas id="dot-grid"></canvas>
+    </div>
     <header class="site-header glass">
       <a class="brand" href="#top">
         <img src="skylink-logo.png" alt="Skylink" class="brand-mark">
@@ -84,12 +86,12 @@
                 src="https://www.google.com/maps?q=Reigate%20Grammar%20School%20Vietnam&z=16&output=embed"
               ></iframe>
               <div class="radar-map-overlay"></div>
-              <div class="drone-marker marker-1"><span class="drone-icon">✦</span></div>
-              <div class="drone-marker marker-2"><span class="drone-icon">✦</span></div>
-              <div class="drone-marker marker-3"><span class="drone-icon">✦</span></div>
-              <div class="drone-marker marker-4"><span class="drone-icon">✦</span></div>
-              <div class="drone-marker marker-5"><span class="drone-icon">✦</span></div>
-              <div class="drone-marker marker-6"><span class="drone-icon">✦</span></div>
+              <div class="drone-marker marker-1"><span class="drone-icon">&#10022;</span></div>
+              <div class="drone-marker marker-2"><span class="drone-icon">&#10022;</span></div>
+              <div class="drone-marker marker-3"><span class="drone-icon">&#10022;</span></div>
+              <div class="drone-marker marker-4"><span class="drone-icon">&#10022;</span></div>
+              <div class="drone-marker marker-5"><span class="drone-icon">&#10022;</span></div>
+              <div class="drone-marker marker-6"><span class="drone-icon">&#10022;</span></div>
             </div>
             <div class="route-stats">
               <div>
@@ -171,7 +173,7 @@
             <p>Central districts, key business corridors, hospitals, labs, office towers, and high-demand commercial areas.</p>
             <div class="zone-list">
               <span>Central Business District</span>
-              <span>Medical & lab routes</span>
+              <span>Medical &amp; lab routes</span>
               <span>Retail fulfillment hubs</span>
               <span>Priority enterprise zones</span>
             </div>
@@ -276,15 +278,15 @@
             <h3>Express route preview</h3>
             <div class="quote-row">
               <span>Base dispatch</span>
-              <strong>120,000 ₫</strong>
+              <strong>120,000 &#8363;</strong>
             </div>
             <div class="quote-row">
               <span>Priority handling</span>
-              <strong>65,000 ₫</strong>
+              <strong>65,000 &#8363;</strong>
             </div>
             <div class="quote-row total">
               <span>Estimated total</span>
-              <strong>185,000 ₫</strong>
+              <strong>185,000 &#8363;</strong>
             </div>
             <ul>
               <li>Live status updates</li>
@@ -367,7 +369,7 @@
     </main>
 
     <script src="script.js"></script>
-    
+
     <!-- Vercel Speed Insights -->
     <script>
       window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
