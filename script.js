@@ -13,27 +13,34 @@ const observer = new IntersectionObserver(
 );
 document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
 
-// ── Spotlight / GlowCard — pricing cards ─────────────────────────────────────
-// Uses card-LOCAL coordinates (relative to each card's own top-left corner)
-// so the radial-gradient spotlight is positioned correctly inside each card.
-// This is more reliable than fixed/viewport coordinates.
+// ── Spotlight — pricing cards ─────────────────────────────────────────────────
+// Attaches to the pricing-section container so mousemove always fires
+// even when hovering over child text nodes inside each card.
 
-const pricingCards = document.querySelectorAll('.pricing-card');
+const pricingSection = document.querySelector('.pricing-section');
+const pricingCards   = document.querySelectorAll('.pricing-card');
 
-pricingCards.forEach((card) => {
-  card.addEventListener('mousemove', (e) => {
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    card.style.setProperty('--mouse-x', `${x}px`);
-    card.style.setProperty('--mouse-y', `${y}px`);
-    card.style.setProperty('--mouse-opacity', '1');
+if (pricingSection && pricingCards.length > 0) {
+  pricingSection.addEventListener('mousemove', (e) => {
+    pricingCards.forEach((card) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+
+      // Only show spotlight when cursor is actually inside this card
+      const inside = x >= 0 && y >= 0 && x <= rect.width && y <= rect.height;
+      card.style.setProperty('--mouse-opacity', inside ? '1' : '0');
+    });
   });
 
-  card.addEventListener('mouseleave', () => {
-    card.style.setProperty('--mouse-opacity', '0');
+  pricingSection.addEventListener('mouseleave', () => {
+    pricingCards.forEach((card) => {
+      card.style.setProperty('--mouse-opacity', '0');
+    });
   });
-});
+}
 
 // ── Booking form ──────────────────────────────────────────────────────────────
 const bookingForm   = document.getElementById('bookingForm');
