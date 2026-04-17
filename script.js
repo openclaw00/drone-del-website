@@ -13,53 +13,85 @@ const observer = new IntersectionObserver(
 );
 document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
 
-// ── Spotlight + neon border glow — all .glass cards ───────────────────────────
-// ::before  = soft radial fill that follows the cursor (CSS handles this)
-// box-shadow = neon border glow that concentrates on the side closest to cursor
+// ── Spotlight + neon border — all .glass cards ────────────────────────────────
+// Per-card state: track current glow intensity and offset with lerp so
+// everything eases in/out smoothly instead of snapping on mouseleave.
 
-const glassCards = document.querySelectorAll('.glass');
+const glassCards = Array.from(document.querySelectorAll('.glass'));
+
+// Per-card lerp state
+const state = glassCards.map(() => ({
+  ox: 0, oy: 0,       // current rendered offset (lerped)
+  tx: 0, ty: 0,       // target offset
+  alpha: 0,           // current glow alpha (lerped)
+  targetAlpha: 0,     // 0 = cursor outside, 1 = inside
+  mx: 0, my: 0,       // raw mouse coords relative to card
+}));
 
 document.addEventListener('mousemove', (e) => {
-  glassCards.forEach((card) => {
+  glassCards.forEach((card, i) => {
     const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     const inside = x >= 0 && y >= 0 && x <= rect.width && y <= rect.height;
 
-    // Update fill spotlight position always (CSS reads these)
+    state[i].mx = x;
+    state[i].my = y;
+    state[i].targetAlpha = inside ? 1 : 0;
+
+    if (inside) {
+      // Normalise to -1..1 from center
+      const nx = (x / rect.width  - 0.5) * 2;
+      const ny = (y / rect.height - 0.5) * 2;
+      state[i].tx = nx * 12;
+      state[i].ty = ny * 12;
+    }
+
+    // Always update fill spotlight position (CSS handles the opacity fade)
     card.style.setProperty('--mouse-x', `${x}px`);
     card.style.setProperty('--mouse-y', `${y}px`);
     card.style.setProperty('--mouse-opacity', inside ? '1' : '0');
-
-    if (inside) {
-      // Normalise to -1..1 from card center
-      const nx = (x / rect.width  - 0.5) * 2;   // -1 = left edge, +1 = right edge
-      const ny = (y / rect.height - 0.5) * 2;   // -1 = top edge,  +1 = bottom edge
-
-      // The neon glow offset: shift toward the cursor side
-      const offsetX = nx * 10;
-      const offsetY = ny * 10;
-      const blur    = 18;
-      const spread  = 2;
-      const alpha   = 0.85;
-
-      card.style.setProperty('--glow-shadow',
-        `0 0 0 1px rgba(255,59,59,0.25),
-         ${offsetX}px ${offsetY}px ${blur}px ${spread}px rgba(255,59,59,${alpha}),
-         ${offsetX * 0.5}px ${offsetY * 0.5}px ${blur * 2}px ${spread * 3}px rgba(255,100,80,0.3)`
-      );
-    } else {
-      card.style.setProperty('--glow-shadow', 'none');
-    }
   });
 });
 
 document.addEventListener('mouseleave', () => {
-  glassCards.forEach((card) => {
+  glassCards.forEach((card, i) => {
+    state[i].targetAlpha = 0;
     card.style.setProperty('--mouse-opacity', '0');
-    card.style.setProperty('--glow-shadow', 'none');
   });
 });
+
+// Lerp loop — smoothly interpolates glow alpha and offset each frame
+const LERP_SPEED = 0.07; // lower = slower/smoother, higher = snappier
+
+function lerp(a, b, t) { return a + (b - a) * t; }
+
+function tick() {
+  glassCards.forEach((card, i) => {
+    const s = state[i];
+
+    s.alpha = lerp(s.alpha, s.targetAlpha, LERP_SPEED);
+    s.ox    = lerp(s.ox,    s.tx,          LERP_SPEED);
+    s.oy    = lerp(s.oy,    s.ty,          LERP_SPEED);
+
+    const a  = s.alpha;
+    const ox = s.ox;
+    const oy = s.oy;
+
+    if (a < 0.002) {
+      card.style.boxShadow = '';
+    } else {
+      card.style.boxShadow =
+        `0 0 0 1px rgba(255,59,59,${(a * 0.2).toFixed(3)}),` +
+        `${ox}px ${oy}px 20px 2px rgba(255,59,59,${(a * 0.7).toFixed(3)}),` +
+        `${ox * 0.4}px ${oy * 0.4}px 40px 6px rgba(255,100,80,${(a * 0.25).toFixed(3)})`;
+    }
+  });
+
+  requestAnimationFrame(tick);
+}
+
+requestAnimationFrame(tick);
 
 // ── Booking form ──────────────────────────────────────────────────────────────
 const bookingForm   = document.getElementById('bookingForm');
