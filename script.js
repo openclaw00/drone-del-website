@@ -13,34 +13,30 @@ const observer = new IntersectionObserver(
 );
 document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
 
-// ── Spotlight — pricing cards ─────────────────────────────────────────────────
-// Attaches to the pricing-section container so mousemove always fires
-// even when hovering over child text nodes inside each card.
+// ── Spotlight — all .glass cards ─────────────────────────────────────────────
+// Single mousemove on document so it always fires regardless of child elements.
+// For each .glass card we check if the cursor is inside it, update coords, and
+// toggle the spotlight on/off via --mouse-opacity.
 
-const pricingSection = document.querySelector('.pricing-section');
-const pricingCards   = document.querySelectorAll('.pricing-card');
+const glassCards = document.querySelectorAll('.glass');
 
-if (pricingSection && pricingCards.length > 0) {
-  pricingSection.addEventListener('mousemove', (e) => {
-    pricingCards.forEach((card) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      card.style.setProperty('--mouse-x', `${x}px`);
-      card.style.setProperty('--mouse-y', `${y}px`);
-
-      // Only show spotlight when cursor is actually inside this card
-      const inside = x >= 0 && y >= 0 && x <= rect.width && y <= rect.height;
-      card.style.setProperty('--mouse-opacity', inside ? '1' : '0');
-    });
+document.addEventListener('mousemove', (e) => {
+  glassCards.forEach((card) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const inside = x >= 0 && y >= 0 && x <= rect.width && y <= rect.height;
+    card.style.setProperty('--mouse-x', `${x}px`);
+    card.style.setProperty('--mouse-y', `${y}px`);
+    card.style.setProperty('--mouse-opacity', inside ? '1' : '0');
   });
+});
 
-  pricingSection.addEventListener('mouseleave', () => {
-    pricingCards.forEach((card) => {
-      card.style.setProperty('--mouse-opacity', '0');
-    });
+document.addEventListener('mouseleave', () => {
+  glassCards.forEach((card) => {
+    card.style.setProperty('--mouse-opacity', '0');
   });
-}
+});
 
 // ── Booking form ──────────────────────────────────────────────────────────────
 const bookingForm   = document.getElementById('bookingForm');
