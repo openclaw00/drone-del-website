@@ -9,44 +9,31 @@ const observer = new IntersectionObserver(
       }
     });
   },
-  {
-    threshold: 0.16,
-    rootMargin: '0px 0px -8% 0px'
-  }
+  { threshold: 0.16, rootMargin: '0px 0px -8% 0px' }
 );
-
 document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
 
-// ── Spotlight / GlowCard — pricing cards ──────────────────────────────────────
-// Mirrors the React GlowCard component's pointer-tracking logic.
-// Writes --x, --y, --xp onto every .pricing-card so their CSS radial-gradient
-// spotlights and border glows follow the cursor across the whole viewport.
+// ── Spotlight / GlowCard — pricing cards ─────────────────────────────────────
+// Uses card-LOCAL coordinates (relative to each card's own top-left corner)
+// so the radial-gradient spotlight is positioned correctly inside each card.
+// This is more reliable than fixed/viewport coordinates.
 
 const pricingCards = document.querySelectorAll('.pricing-card');
 
-if (pricingCards.length > 0) {
-  document.addEventListener('pointermove', (e) => {
-    const x  = e.clientX.toFixed(2);
-    const y  = e.clientY.toFixed(2);
-    const xp = (e.clientX / window.innerWidth).toFixed(4);
-    const yp = (e.clientY / window.innerHeight).toFixed(4);
-
-    pricingCards.forEach((card) => {
-      card.style.setProperty('--x',  x);
-      card.style.setProperty('--y',  y);
-      card.style.setProperty('--xp', xp);
-      card.style.setProperty('--yp', yp);
-    });
+pricingCards.forEach((card) => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    card.style.setProperty('--mouse-x', `${x}px`);
+    card.style.setProperty('--mouse-y', `${y}px`);
+    card.style.setProperty('--mouse-opacity', '1');
   });
 
-  // Park the spotlight off-screen when cursor leaves the window
-  document.addEventListener('pointerleave', () => {
-    pricingCards.forEach((card) => {
-      card.style.setProperty('--x', '-9999');
-      card.style.setProperty('--y', '-9999');
-    });
+  card.addEventListener('mouseleave', () => {
+    card.style.setProperty('--mouse-opacity', '0');
   });
-}
+});
 
 // ── Booking form ──────────────────────────────────────────────────────────────
 const bookingForm   = document.getElementById('bookingForm');
@@ -70,7 +57,6 @@ if (bookingForm) {
       phone:       formData.get('phone')       || '',
       notes:       formData.get('notes')       || ''
     });
-
     window.location.href = `order.html?${params.toString()}`;
   });
 }
