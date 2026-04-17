@@ -65,9 +65,9 @@ body {
 }
 
 /* ── Spotlight + neon glow on every .glass card ───────────────────────────────
-   --mouse-x/y    = cursor position relative to card (set by JS)
-   --mouse-opacity = 0 or 1 (JS toggles on enter/leave)
-   --glow-shadow  = dynamic box-shadow string (set by JS, follows cursor edge)   */
+   --mouse-x/y     = cursor pos relative to card (JS)
+   --mouse-opacity = fade for the fill blob (JS)
+   box-shadow      = neon border glow, lerped each rAF frame by JS             */
 .glass {
   background: var(--panel);
   border: 1px solid var(--line);
@@ -77,22 +77,19 @@ body {
   --mouse-x: 50%;
   --mouse-y: 50%;
   --mouse-opacity: 0;
-  --glow-shadow: none;
 
   position: relative;
   overflow: hidden;
   box-shadow: var(--shadow);
-  /* JS writes --glow-shadow; we layer it on top of the base shadow */
-  transition: box-shadow 80ms linear;
+  /* No CSS transition on box-shadow — JS lerp handles the easing */
+  transition: border-color 600ms ease;
 }
 
-/* Apply the neon glow shadow from JS */
 .glass:hover {
-  box-shadow: var(--glow-shadow, var(--shadow));
-  border-color: rgba(255, 59, 59, 0.15);
+  border-color: rgba(255, 59, 59, 0.2);
 }
 
-/* Radial fill spotlight — soft red blob under the cursor */
+/* Radial fill spotlight */
 .glass::before {
   content: "";
   position: absolute;
@@ -104,11 +101,10 @@ body {
     transparent 70%
   );
   opacity: var(--mouse-opacity);
-  transition: opacity 350ms ease;
+  transition: opacity 600ms ease;
   z-index: 0;
 }
 
-/* Keep all card content above the spotlight layer */
 .glass > * { position: relative; z-index: 1; }
 
 .brand {
