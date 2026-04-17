@@ -64,26 +64,35 @@ body {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
 }
 
-/* ── Spotlight on every .glass card ──────────────────────────────────────────
-   JS (script.js) writes --mouse-x / --mouse-y / --mouse-opacity on each card.
-   ::before is the red radial blob. overflow: hidden clips it to the card shape.
-   position: relative is needed so the pseudo-element is positioned inside.     */
+/* ── Spotlight + neon glow on every .glass card ───────────────────────────────
+   --mouse-x/y    = cursor position relative to card (set by JS)
+   --mouse-opacity = 0 or 1 (JS toggles on enter/leave)
+   --glow-shadow  = dynamic box-shadow string (set by JS, follows cursor edge)   */
 .glass {
   background: var(--panel);
   border: 1px solid var(--line);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  box-shadow: var(--shadow);
 
   --mouse-x: 50%;
   --mouse-y: 50%;
   --mouse-opacity: 0;
+  --glow-shadow: none;
 
   position: relative;
   overflow: hidden;
-  transition: border-color 300ms ease, box-shadow 300ms ease;
+  box-shadow: var(--shadow);
+  /* JS writes --glow-shadow; we layer it on top of the base shadow */
+  transition: box-shadow 80ms linear;
 }
 
+/* Apply the neon glow shadow from JS */
+.glass:hover {
+  box-shadow: var(--glow-shadow, var(--shadow));
+  border-color: rgba(255, 59, 59, 0.15);
+}
+
+/* Radial fill spotlight — soft red blob under the cursor */
 .glass::before {
   content: "";
   position: absolute;
@@ -91,7 +100,7 @@ body {
   pointer-events: none;
   background: radial-gradient(
     320px circle at var(--mouse-x) var(--mouse-y),
-    rgba(255, 59, 59, 0.1),
+    rgba(255, 59, 59, 0.08),
     transparent 70%
   );
   opacity: var(--mouse-opacity);
@@ -99,20 +108,8 @@ body {
   z-index: 0;
 }
 
-/* Lift everything inside above the spotlight layer */
+/* Keep all card content above the spotlight layer */
 .glass > * { position: relative; z-index: 1; }
-
-/* Glow border on hover for all glass cards */
-.glass:hover {
-  border-color: rgba(255, 59, 59, 0.3);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.11);
-}
-
-/* Don't lift the nav header or hero panel on hover */
-.site-header:hover,
-.hero-panel:hover {
-  transform: none;
-}
 
 .brand {
   display: inline-flex;
@@ -822,9 +819,7 @@ textarea::placeholder { color: #9ca3af; }
   flex-direction: column;
 }
 
-.pricing-card:hover {
-  transform: translateY(-4px);
-}
+.pricing-card:hover { transform: translateY(-4px); }
 
 .pricing-card h3 { margin-bottom: 8px; }
 
