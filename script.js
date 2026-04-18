@@ -4,8 +4,8 @@
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
 
-  const SPACING = 16;
-  const RADIUS = 1.5;
+  const SPACING = 9;
+  const RADIUS = 1.0;
   const GLOW_RADIUS = 140;
   const BASE_ALPHA = 0.13;
   const SIZE_BOOST = 0.35;
