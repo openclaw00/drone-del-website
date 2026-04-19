@@ -179,7 +179,7 @@ const bookingForm   = document.getElementById('bookingForm');
 const trackingInput = document.getElementById('trackingInput');
 const trackButton   = document.getElementById('trackButton');
 
-const buildTrackingId = () => 'RWX-' + Math.floor(100000 + Math.random() * 900000);
+const buildTrackingId = () => 'SKY-' + Math.floor(100000 + Math.random() * 900000);
 
 if (bookingForm) {
   bookingForm.addEventListener('submit', (event) => {
