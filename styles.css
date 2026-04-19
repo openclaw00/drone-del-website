@@ -671,22 +671,52 @@ select option { background: #1a1a1f; color: var(--text); }
 }
 
 .partner-logo {
-  padding: 22px 14px;
+  padding: 18px 14px;
   border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
+  min-height: 80px;
+}
+
+.partner-logo img {
+  max-width: 100%;
+  max-height: 40px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: grayscale(100%) brightness(1.4) contrast(0.9);
+  opacity: 0.75;
+  transition: filter 300ms ease, opacity 300ms ease;
+}
+
+.partner-logo:hover img {
+  filter: grayscale(0%) brightness(1) contrast(1);
+  opacity: 1;
+}
+
+.partner-text {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 0.95rem;
   color: var(--muted);
   letter-spacing: -0.01em;
-  min-height: 72px;
   transition: color 220ms ease;
 }
 
-.partner-logo:hover { color: var(--text); }
+.partner-logo:hover .partner-text { color: var(--text); }
+
+/* ── Pricing note ── */
+
+.pricing-note {
+  margin: 20px 0 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-style: italic;
+  text-align: center;
+  opacity: 0.8;
+}
 
 /* ── FAQ ── */
 
