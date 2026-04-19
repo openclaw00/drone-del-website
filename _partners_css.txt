@@ -1,0 +1,38 @@
+/* ── Partners ── */
+
+.partners-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.partner-logo {
+  padding: 28px 20px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100px;
+}
+
+.partner-logo img {
+  max-width: 100%;
+  max-height: 52px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  mix-blend-mode: screen;
+  opacity: 0.75;
+  transition: opacity 300ms ease, transform 300ms ease;
+}
+
+/* Long Chau and Vinmec have lots of internal padding in the image — scale them up */
+.partner-logo img[alt="Long Chau"],
+.partner-logo img[alt="Vinmec"] {
+  max-height: 90px;
+}
+
+.partner-logo:hover img {
+  opacity: 1;
+  transform: scale(1.05);
+}
