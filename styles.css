@@ -64,7 +64,7 @@ body {
   position: relative;
   overflow: hidden;
   box-shadow: var(--shadow);
-  transition: border-color 600ms ease;
+  transition: border-color 600ms ease, box-shadow 600ms ease;
 }
 
 .glass:hover { border-color: rgba(255, 68, 68, 0.25); }
@@ -357,34 +357,22 @@ select option { background: #1a1a1f; color: var(--text); }
 
 /* ── Partner glow colours ── */
 
-/* Grab — green */
-.partner-logo:has(img[alt="Grab"]) {
-  box-shadow: 0 0 18px rgba(0, 180, 80, 0.2);
-  border-color: rgba(0, 180, 80, 0.2);
-}
-.partner-logo:has(img[alt="Grab"]):hover {
-  box-shadow: 0 0 32px rgba(0, 180, 80, 0.4);
-  border-color: rgba(0, 180, 80, 0.4);
+.partner-grab,
+.partner-grab:hover {
+  box-shadow: 0 0 40px 8px rgba(0, 200, 80, 0.45), 0 10px 30px rgba(0,0,0,0.4) !important;
+  border-color: rgba(0, 200, 80, 0.5) !important;
 }
 
-/* Long Chau — blue */
-.partner-logo:has(img[alt="Long Chau"]) {
-  box-shadow: 0 0 18px rgba(30, 130, 255, 0.2);
-  border-color: rgba(30, 130, 255, 0.2);
-}
-.partner-logo:has(img[alt="Long Chau"]):hover {
-  box-shadow: 0 0 32px rgba(30, 130, 255, 0.4);
-  border-color: rgba(30, 130, 255, 0.4);
+.partner-longchau,
+.partner-longchau:hover {
+  box-shadow: 0 0 40px 8px rgba(30, 130, 255, 0.45), 0 10px 30px rgba(0,0,0,0.4) !important;
+  border-color: rgba(30, 130, 255, 0.5) !important;
 }
 
-/* Vinmec — yellow */
-.partner-logo:has(img[alt="Vinmec"]) {
-  box-shadow: 0 0 18px rgba(255, 200, 30, 0.2);
-  border-color: rgba(255, 200, 30, 0.2);
-}
-.partner-logo:has(img[alt="Vinmec"]):hover {
-  box-shadow: 0 0 32px rgba(255, 200, 30, 0.4);
-  border-color: rgba(255, 200, 30, 0.4);
+.partner-vinmec,
+.partner-vinmec:hover {
+  box-shadow: 0 0 40px 8px rgba(255, 200, 30, 0.45), 0 10px 30px rgba(0,0,0,0.4) !important;
+  border-color: rgba(255, 200, 30, 0.5) !important;
 }
 
 /* ── Pricing note ── */
