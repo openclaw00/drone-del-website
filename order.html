@@ -14,6 +14,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="manifest" href="site.webmanifest">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   </head>
   <body>
     <div class="grid-overlay"></div>
@@ -54,13 +55,7 @@
               </div>
               <span class="status-pill" id="etaPill">ETA 14 min</span>
             </div>
-            <iframe
-              class="order-live-map"
-              title="Order live route map"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              src="https://www.google.com/maps?q=Reigate%20Grammar%20School%20Vietnam&z=15&output=embed"
-            ></iframe>
+            <div id="liveMap" class="order-live-map"></div>
           </div>
 
           <div class="timeline-card glass reveal visible">
@@ -102,6 +97,7 @@
       </section>
     </main>
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="order.js"></script>
     
     <!-- Vercel Speed Insights -->
