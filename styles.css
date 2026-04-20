@@ -355,6 +355,38 @@ select option { background: #1a1a1f; color: var(--text); }
 
 .partner-logo:hover img { opacity: 1; transform: scale(1.05); }
 
+/* ── Partner glow colours ── */
+
+/* Grab — green */
+.partner-logo:has(img[alt="Grab"]) {
+  box-shadow: 0 0 18px rgba(0, 180, 80, 0.2);
+  border-color: rgba(0, 180, 80, 0.2);
+}
+.partner-logo:has(img[alt="Grab"]):hover {
+  box-shadow: 0 0 32px rgba(0, 180, 80, 0.4);
+  border-color: rgba(0, 180, 80, 0.4);
+}
+
+/* Long Chau — blue */
+.partner-logo:has(img[alt="Long Chau"]) {
+  box-shadow: 0 0 18px rgba(30, 130, 255, 0.2);
+  border-color: rgba(30, 130, 255, 0.2);
+}
+.partner-logo:has(img[alt="Long Chau"]):hover {
+  box-shadow: 0 0 32px rgba(30, 130, 255, 0.4);
+  border-color: rgba(30, 130, 255, 0.4);
+}
+
+/* Vinmec — yellow */
+.partner-logo:has(img[alt="Vinmec"]) {
+  box-shadow: 0 0 18px rgba(255, 200, 30, 0.2);
+  border-color: rgba(255, 200, 30, 0.2);
+}
+.partner-logo:has(img[alt="Vinmec"]):hover {
+  box-shadow: 0 0 32px rgba(255, 200, 30, 0.4);
+  border-color: rgba(255, 200, 30, 0.4);
+}
+
 /* ── Pricing note ── */
 
 .pricing-note { margin: 20px 0 0; color: var(--muted); font-size: 0.88rem; font-style: italic; text-align: center; opacity: 0.8; }
