@@ -64,7 +64,7 @@ body {
   position: relative;
   overflow: hidden;
   box-shadow: var(--shadow);
-  transition: border-color 600ms ease, box-shadow 600ms ease;
+  transition: border-color 600ms ease;
 }
 
 .glass:hover { border-color: rgba(255, 68, 68, 0.25); }
