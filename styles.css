@@ -347,7 +347,6 @@ select option { background: #1a1a1f; color: var(--text); }
   transition: opacity 300ms ease, transform 300ms ease;
 }
 
-/* Long Chau and Vinmec images have a lot of internal padding — scale up to match */
 .partner-logo img[alt="Long Chau"],
 .partner-logo img[alt="Vinmec"] {
   max-height: 90px;
@@ -361,6 +360,12 @@ select option { background: #1a1a1f; color: var(--text); }
 .partner-grab:hover {
   box-shadow: 0 0 40px 8px rgba(0, 200, 80, 0.45), 0 10px 30px rgba(0,0,0,0.4) !important;
   border-color: rgba(0, 200, 80, 0.5) !important;
+}
+
+.partner-winmart,
+.partner-winmart:hover {
+  box-shadow: 0 0 40px 8px rgba(220, 50, 50, 0.45), 0 10px 30px rgba(0,0,0,0.4) !important;
+  border-color: rgba(220, 50, 50, 0.5) !important;
 }
 
 .partner-longchau,
