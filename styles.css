@@ -334,6 +334,9 @@ select option { background: #1a1a1f; color: var(--text); }
 .partner-logo {
   padding: 28px 20px; border-radius: var(--radius-lg);
   display: flex; align-items: center; justify-content: center; min-height: 100px;
+  background: rgba(17, 17, 20, 0.92) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
 }
 
 .partner-logo img {
