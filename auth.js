@@ -31,6 +31,17 @@ tabRegister.addEventListener('click', () => {
   showMsg('');
 });
 
+// Google login
+document.getElementById('googleBtn').addEventListener('click', async () => {
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: window.location.origin + '/dashboard.html'
+    }
+  });
+  if (error) showMsg(error.message);
+});
+
 // Login
 document.getElementById('loginBtn').addEventListener('click', async () => {
   const email = document.getElementById('loginEmail').value.trim();
@@ -56,7 +67,6 @@ document.getElementById('registerBtn').addEventListener('click', async () => {
     options: { data: { full_name: name, role: 'user' } }
   });
   if (error) return showMsg(error.message);
-  // Insert profile row
   if (data.user) {
     await supabase.from('profiles').upsert({
       id: data.user.id,
@@ -65,5 +75,6 @@ document.getElementById('registerBtn').addEventListener('click', async () => {
       role: 'user'
     });
   }
-  showMsg('Account created! Check your email to confirm, then log in.', 'success');
+  showMsg('Account created! Logging you in...', 'success');
+  setTimeout(() => window.location.href = 'dashboard.html', 1000);
 });
