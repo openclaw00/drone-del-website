@@ -39,7 +39,10 @@
         <a href="#faq">FAQ</a>
         <a href="#about">About</a>
       </nav>
-      <a class="button primary small" href="#booking">Book delivery</a>
+      <div style="display:flex;align-items:center;gap:0.75rem;">
+        <a class="button secondary small" id="navAuthBtn" href="auth.html">Login</a>
+        <a class="button primary small" href="#booking">Book delivery</a>
+      </div>
     </header>
 
     <main id="top">
@@ -353,6 +356,7 @@
             </label>
             <div class="form-actions">
               <button type="submit" class="button primary">Request dispatch</button>
+              <p id="bookingMsg" style="margin-top:0.75rem;font-size:0.9rem;"></p>
             </div>
           </form>
 
@@ -391,6 +395,13 @@
             <input type="text" id="trackingInput" placeholder="Enter tracking ID (e.g. SKY-482193)" />
             <button class="button primary" id="trackButton" type="button">Track now</button>
           </div>
+          <div id="trackResult" style="display:none;margin-top:1.5rem;padding:1.25rem;border-radius:0.75rem;background:rgba(255,255,255,0.05);font-size:0.9rem;">
+            <div style="display:flex;justify-content:space-between;margin-bottom:0.5rem;"><span style="color:#aaa">Tracking ID</span><strong id="trId">—</strong></div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:0.5rem;"><span style="color:#aaa">Status</span><strong id="trStatus">—</strong></div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:0.5rem;"><span style="color:#aaa">Pickup</span><strong id="trPickup">—</strong></div>
+            <div style="display:flex;justify-content:space-between;"><span style="color:#aaa">Dropoff</span><strong id="trDropoff">—</strong></div>
+          </div>
+          <p id="trackMsg" style="color:#f87171;font-size:0.9rem;margin-top:0.75rem;"></p>
         </div>
       </section>
 
@@ -488,6 +499,76 @@
     </main>
 
     <script src="script.js"></script>
+    <script type="module">
+      import { supabase } from './supabase.js';
+
+      // Update navbar auth button based on session
+      const btn = document.getElementById('navAuthBtn');
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        btn.textContent = 'My account';
+        btn.href = 'dashboard.html';
+      }
+
+      // Booking form — save to Supabase if logged in, else redirect to auth
+      document.getElementById('bookingForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const { data: { session } } = await supabase.auth.getSession();
+        const msgEl = document.getElementById('bookingMsg');
+
+        if (!session) {
+          msgEl.style.color = '#fbbf24';
+          msgEl.textContent = 'Please log in to place an order.';
+          setTimeout(() => window.location.href = 'auth.html', 1500);
+          return;
+        }
+
+        const form = e.target;
+        const tracking_id = 'SKY-' + Math.floor(100000 + Math.random() * 900000);
+        const { error } = await supabase.from('orders').insert({
+          user_id: session.user.id,
+          tracking_id,
+          pickup: form.pickup.value,
+          dropoff: form.dropoff.value,
+          package_type: form.packageType.value,
+          weight: form.weight.value,
+          speed: form.speed.value,
+          phone: form.phone.value,
+          notes: form.notes.value,
+          status: 'pending'
+        });
+
+        if (error) {
+          msgEl.style.color = '#f87171';
+          msgEl.textContent = 'Error: ' + error.message;
+        } else {
+          msgEl.style.color = '#4ade80';
+          msgEl.textContent = `Order placed! Tracking ID: ${tracking_id}`;
+          form.reset();
+        }
+      });
+
+      // Tracking on homepage
+      document.getElementById('trackButton').addEventListener('click', async () => {
+        const id = document.getElementById('trackingInput').value.trim().toUpperCase();
+        const msgEl = document.getElementById('trackMsg');
+        const result = document.getElementById('trackResult');
+        msgEl.textContent = '';
+        result.style.display = 'none';
+        if (!id) return;
+
+        const { data, error } = await supabase.from('orders').select('*').eq('tracking_id', id).single();
+        if (error || !data) {
+          msgEl.textContent = 'No order found with that tracking ID.';
+          return;
+        }
+        document.getElementById('trId').textContent = data.tracking_id;
+        document.getElementById('trStatus').textContent = data.status.replace('_', ' ');
+        document.getElementById('trPickup').textContent = data.pickup;
+        document.getElementById('trDropoff').textContent = data.dropoff;
+        result.style.display = 'block';
+      });
+    </script>
 
     <!-- Vercel Speed Insights -->
     <script>
