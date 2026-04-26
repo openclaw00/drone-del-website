@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Skylink</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <style>
+    body { padding: 0; }
+    .dash-header { display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 2rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .dash-header .brand { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: #fff; font-weight: 700; font-size: 1.1rem; }
+    .dash-header .brand img { height: 32px; }
+    .dash-header .right { display: flex; align-items: center; gap: 1rem; }
+    .user-badge { font-size: 0.85rem; color: #aaa; }
+    .admin-main { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem; }
+    .admin-main h1 { font-size: 1.6rem; margin-bottom: 0.5rem; }
+    .admin-main p.sub { color: #aaa; margin-bottom: 2rem; font-size: 0.95rem; }
+    .stats-row { display: flex; gap: 1rem; margin-bottom: 2.5rem; flex-wrap: wrap; }
+    .stat-card { flex: 1; min-width: 140px; padding: 1.25rem 1.5rem; border-radius: 0.85rem; }
+    .stat-card .label { font-size: 0.8rem; color: #aaa; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+    .stat-card .value { font-size: 2rem; font-weight: 700; }
+    .filter-bar { display: flex; gap: 0.75rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+    .filter-bar select, .filter-bar input { padding: 0.6rem 1rem; border-radius: 0.6rem; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.05); color: #fff; font-family: inherit; font-size: 0.9rem; outline: none; }
+    .filter-bar select option { background: #1a1a2e; }
+    .order-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    .order-table th { text-align: left; padding: 0.6rem 0.75rem; color: #aaa; font-weight: 500; border-bottom: 1px solid rgba(255,255,255,0.08); white-space: nowrap; }
+    .order-table td { padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .order-table tr:last-child td { border-bottom: none; }
+    .status-badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 999px; font-size: 0.78rem; font-weight: 600; }
+    .status-pending { background: rgba(251,191,36,0.15); color: #fbbf24; }
+    .status-in_flight { background: rgba(59,130,246,0.15); color: #60a5fa; }
+    .status-delivered { background: rgba(74,222,128,0.15); color: #4ade80; }
+    .status-cancelled { background: rgba(248,113,113,0.15); color: #f87171; }
+    .status-select { background: transparent; border: 1px solid rgba(255,255,255,0.15); color: #fff; border-radius: 0.4rem; padding: 0.25rem 0.5rem; font-size: 0.82rem; cursor: pointer; font-family: inherit; }
+    .status-select option { background: #1a1a2e; }
+    .empty-state { color: #666; font-size: 0.95rem; padding: 1.5rem 0; }
+  </style>
+</head>
+<body>
+  <header class="dash-header glass">
+    <a class="brand" href="index.html">
+      <img src="abuabu__1_-removebg-preview.png" alt="Skylink">
+      Skylink <span style="color:#e63946;margin-left:0.4rem;font-size:0.85rem;">Admin</span>
+    </a>
+    <div class="right">
+      <a href="dashboard.html" style="font-size:0.85rem;color:#aaa;text-decoration:none;">← My account</a>
+      <span class="user-badge" id="userEmail"></span>
+      <button class="button primary small" id="logoutBtn">Log out</button>
+    </div>
+  </header>
+
+  <main class="admin-main">
+    <h1>Admin panel</h1>
+    <p class="sub">All orders across all users. Update order status in real time.</p>
+
+    <div class="stats-row">
+      <div class="stat-card glass"><div class="label">Total orders</div><div class="value" id="statTotal">—</div></div>
+      <div class="stat-card glass"><div class="label">Pending</div><div class="value" id="statPending" style="color:#fbbf24">—</div></div>
+      <div class="stat-card glass"><div class="label">In flight</div><div class="value" id="statFlight" style="color:#60a5fa">—</div></div>
+      <div class="stat-card glass"><div class="label">Delivered</div><div class="value" id="statDelivered" style="color:#4ade80">—</div></div>
+    </div>
+
+    <div class="filter-bar">
+      <select id="filterStatus">
+        <option value="">All statuses</option>
+        <option value="pending">Pending</option>
+        <option value="in_flight">In flight</option>
+        <option value="delivered">Delivered</option>
+        <option value="cancelled">Cancelled</option>
+      </select>
+      <input type="text" id="filterSearch" placeholder="Search tracking ID or location..." style="flex:1;min-width:200px;" />
+    </div>
+
+    <div class="glass" style="padding:1.75rem;border-radius:1rem;overflow-x:auto;">
+      <table class="order-table">
+        <thead>
+          <tr>
+            <th>Tracking ID</th>
+            <th>User</th>
+            <th>Pickup</th>
+            <th>Dropoff</th>
+            <th>Type</th>
+            <th>Weight</th>
+            <th>Speed</th>
+            <th>Status</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody id="adminOrdersBody">
+          <tr><td colspan="9" class="empty-state">Loading...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <script type="module" src="admin.js"></script>
+</body>
+</html>

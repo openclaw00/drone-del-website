@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login — Skylink</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <style>
+    body { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; }
+    .auth-box { width: 100%; max-width: 420px; padding: 2.5rem; border-radius: 1.25rem; }
+    .auth-box h1 { font-size: 1.75rem; margin-bottom: 0.5rem; }
+    .auth-box p.sub { color: var(--text-muted, #aaa); margin-bottom: 2rem; font-size: 0.95rem; }
+    .auth-tabs { display: flex; gap: 0.5rem; margin-bottom: 2rem; }
+    .auth-tab { flex: 1; padding: 0.6rem; border: 1px solid rgba(255,255,255,0.15); background: transparent; color: #fff; border-radius: 0.5rem; cursor: pointer; font-family: inherit; font-size: 0.9rem; transition: background 0.2s; }
+    .auth-tab.active { background: var(--accent, #e63946); border-color: var(--accent, #e63946); }
+    .auth-field { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.25rem; }
+    .auth-field label { font-size: 0.85rem; font-weight: 500; }
+    .auth-field input { padding: 0.75rem 1rem; border-radius: 0.6rem; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.05); color: #fff; font-family: inherit; font-size: 0.95rem; outline: none; transition: border-color 0.2s; }
+    .auth-field input:focus { border-color: var(--accent, #e63946); }
+    .auth-btn { width: 100%; padding: 0.85rem; background: var(--accent, #e63946); color: #fff; border: none; border-radius: 0.6rem; font-family: inherit; font-size: 1rem; font-weight: 600; cursor: pointer; transition: opacity 0.2s; margin-top: 0.5rem; }
+    .auth-btn:hover { opacity: 0.88; }
+    .auth-msg { margin-top: 1rem; font-size: 0.9rem; min-height: 1.2rem; }
+    .auth-msg.error { color: #f87171; }
+    .auth-msg.success { color: #4ade80; }
+    .brand-link { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: #fff; font-weight: 700; font-size: 1.1rem; margin-bottom: 2.5rem; }
+    .brand-link img { height: 32px; }
+  </style>
+</head>
+<body>
+  <a class="brand-link" href="index.html">
+    <img src="abuabu__1_-removebg-preview.png" alt="Skylink">
+    Skylink
+  </a>
+  <div class="auth-box glass">
+    <h1>Welcome back</h1>
+    <p class="sub">Sign in to your Skylink account or create a new one.</p>
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tabLogin">Login</button>
+      <button class="auth-tab" id="tabRegister">Register</button>
+    </div>
+
+    <div id="loginForm">
+      <div class="auth-field">
+        <label>Email</label>
+        <input type="email" id="loginEmail" placeholder="you@example.com" />
+      </div>
+      <div class="auth-field">
+        <label>Password</label>
+        <input type="password" id="loginPassword" placeholder="••••••••" />
+      </div>
+      <button class="auth-btn" id="loginBtn">Sign in</button>
+    </div>
+
+    <div id="registerForm" style="display:none">
+      <div class="auth-field">
+        <label>Full name</label>
+        <input type="text" id="regName" placeholder="Nguyen Van A" />
+      </div>
+      <div class="auth-field">
+        <label>Email</label>
+        <input type="email" id="regEmail" placeholder="you@example.com" />
+      </div>
+      <div class="auth-field">
+        <label>Password</label>
+        <input type="password" id="regPassword" placeholder="At least 6 characters" />
+      </div>
+      <button class="auth-btn" id="registerBtn">Create account</button>
+    </div>
+
+    <p class="auth-msg" id="authMsg"></p>
+  </div>
+
+  <script type="module" src="auth.js"></script>
+</body>
+</html>

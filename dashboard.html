@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — Skylink</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <style>
+    body { padding: 0; }
+    .dash-header { display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 2rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .dash-header .brand { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: #fff; font-weight: 700; font-size: 1.1rem; }
+    .dash-header .brand img { height: 32px; }
+    .dash-header .right { display: flex; align-items: center; gap: 1rem; }
+    .user-badge { font-size: 0.85rem; color: #aaa; }
+    .dash-main { max-width: 960px; margin: 0 auto; padding: 3rem 2rem; }
+    .dash-section { margin-bottom: 3rem; }
+    .dash-section h2 { font-size: 1.3rem; margin-bottom: 1.25rem; }
+    .profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .profile-field { display: flex; flex-direction: column; gap: 0.35rem; }
+    .profile-field label { font-size: 0.8rem; color: #aaa; text-transform: uppercase; letter-spacing: 0.05em; }
+    .profile-field span { font-size: 1rem; font-weight: 500; }
+    .order-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    .order-table th { text-align: left; padding: 0.6rem 0.75rem; color: #aaa; font-weight: 500; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .order-table td { padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .order-table tr:last-child td { border-bottom: none; }
+    .status-badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 999px; font-size: 0.78rem; font-weight: 600; }
+    .status-pending { background: rgba(251,191,36,0.15); color: #fbbf24; }
+    .status-in_flight { background: rgba(59,130,246,0.15); color: #60a5fa; }
+    .status-delivered { background: rgba(74,222,128,0.15); color: #4ade80; }
+    .status-cancelled { background: rgba(248,113,113,0.15); color: #f87171; }
+    .track-bar { display: flex; gap: 0.75rem; margin-bottom: 1.5rem; }
+    .track-bar input { flex: 1; padding: 0.7rem 1rem; border-radius: 0.6rem; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.05); color: #fff; font-family: inherit; font-size: 0.95rem; outline: none; }
+    .track-bar input:focus { border-color: var(--accent, #e63946); }
+    .track-result { padding: 1.25rem; border-radius: 0.75rem; margin-top: 1rem; display: none; }
+    .track-row { display: flex; justify-content: space-between; margin-bottom: 0.6rem; font-size: 0.9rem; }
+    .track-row span { color: #aaa; }
+    .empty-state { color: #666; font-size: 0.95rem; padding: 1.5rem 0; }
+    .place-order-form { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .place-order-form .full { grid-column: 1 / -1; }
+    .form-field { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-field label { font-size: 0.85rem; font-weight: 500; }
+    .form-field input, .form-field select, .form-field textarea { padding: 0.7rem 1rem; border-radius: 0.6rem; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.05); color: #fff; font-family: inherit; font-size: 0.9rem; outline: none; }
+    .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--accent, #e63946); }
+    .form-field select option { background: #1a1a2e; }
+    .order-msg { margin-top: 1rem; font-size: 0.9rem; min-height: 1.2rem; }
+    .order-msg.success { color: #4ade80; }
+    .order-msg.error { color: #f87171; }
+    .admin-link { font-size: 0.85rem; color: var(--accent, #e63946); text-decoration: none; display: none; }
+    .admin-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <header class="dash-header glass">
+    <a class="brand" href="index.html">
+      <img src="abuabu__1_-removebg-preview.png" alt="Skylink">
+      Skylink
+    </a>
+    <div class="right">
+      <a class="admin-link" id="adminLink" href="admin.html">Admin panel →</a>
+      <span class="user-badge" id="userEmail">Loading...</span>
+      <button class="button primary small" id="logoutBtn">Log out</button>
+    </div>
+  </header>
+
+  <main class="dash-main">
+    <!-- Profile -->
+    <section class="dash-section glass" style="padding:1.75rem;border-radius:1rem;">
+      <h2>My account</h2>
+      <div class="profile-grid">
+        <div class="profile-field"><label>Name</label><span id="profName">—</span></div>
+        <div class="profile-field"><label>Email</label><span id="profEmail">—</span></div>
+        <div class="profile-field"><label>Role</label><span id="profRole">—</span></div>
+        <div class="profile-field"><label>Member since</label><span id="profSince">—</span></div>
+      </div>
+    </section>
+
+    <!-- Place order -->
+    <section class="dash-section">
+      <h2>Place a new order</h2>
+      <div class="glass" style="padding:1.75rem;border-radius:1rem;">
+        <div class="place-order-form">
+          <div class="form-field">
+            <label>Pickup location</label>
+            <input type="text" id="oPickup" placeholder="e.g. 12 Xuan Dieu, Tay Ho" />
+          </div>
+          <div class="form-field">
+            <label>Dropoff location</label>
+            <input type="text" id="oDropoff" placeholder="e.g. Vinmec Hospital" />
+          </div>
+          <div class="form-field">
+            <label>Package type</label>
+            <select id="oType">
+              <option>Documents</option>
+              <option>Medical item</option>
+              <option>Electronics</option>
+              <option>Retail package</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Weight</label>
+            <select id="oWeight">
+              <option>Under 1 kg</option>
+              <option>1 - 3 kg</option>
+              <option>3 - 5 kg</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Delivery speed</label>
+            <select id="oSpeed">
+              <option>Immediate priority</option>
+              <option>Same day</option>
+              <option>Scheduled window</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Contact phone</label>
+            <input type="tel" id="oPhone" placeholder="Your contact number" />
+          </div>
+          <div class="form-field full">
+            <label>Delivery notes</label>
+            <textarea id="oNotes" rows="3" placeholder="Gate instructions, recipient details, handling notes..."></textarea>
+          </div>
+        </div>
+        <button class="button primary" id="placeOrderBtn" style="margin-top:1rem;">Request dispatch</button>
+        <p class="order-msg" id="orderMsg"></p>
+      </div>
+    </section>
+
+    <!-- Track -->
+    <section class="dash-section">
+      <h2>Track a shipment</h2>
+      <div class="glass" style="padding:1.75rem;border-radius:1rem;">
+        <div class="track-bar">
+          <input type="text" id="trackInput" placeholder="Enter tracking ID (e.g. SKY-482193)" />
+          <button class="button primary" id="trackBtn">Track</button>
+        </div>
+        <div class="track-result glass" id="trackResult">
+          <div class="track-row"><span>Tracking ID</span><strong id="trId">—</strong></div>
+          <div class="track-row"><span>Status</span><strong id="trStatus">—</strong></div>
+          <div class="track-row"><span>Pickup</span><strong id="trPickup">—</strong></div>
+          <div class="track-row"><span>Dropoff</span><strong id="trDropoff">—</strong></div>
+          <div class="track-row"><span>Package</span><strong id="trType">—</strong></div>
+          <div class="track-row"><span>Placed</span><strong id="trDate">—</strong></div>
+        </div>
+        <p id="trackMsg" style="color:#f87171;font-size:0.9rem;margin-top:0.75rem;"></p>
+      </div>
+    </section>
+
+    <!-- Order history -->
+    <section class="dash-section">
+      <h2>My orders</h2>
+      <div class="glass" style="padding:1.75rem;border-radius:1rem;overflow-x:auto;">
+        <table class="order-table">
+          <thead>
+            <tr>
+              <th>Tracking ID</th>
+              <th>Pickup</th>
+              <th>Dropoff</th>
+              <th>Type</th>
+              <th>Status</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody id="ordersBody">
+            <tr><td colspan="6" class="empty-state">Loading orders...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="dashboard.js"></script>
+</body>
+</html>
