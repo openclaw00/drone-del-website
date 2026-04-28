@@ -10,14 +10,26 @@ document.getElementById('userEmail').textContent = user.email;
 // Load profile
 const { data: profile } = await supabase.from('profiles').select('*').eq('id', user.id).single();
 
-if (profile) {
-  document.getElementById('profName').textContent = profile.full_name || '—';
-  document.getElementById('profEmail').textContent = profile.email || user.email;
-  document.getElementById('profRole').textContent = profile.role || 'user';
-  document.getElementById('profSince').textContent = new Date(user.created_at).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
-  if (profile.role === 'admin') {
-    document.getElementById('adminLink').style.display = 'inline';
-  }
+const fullName = profile?.full_name || user.user_metadata?.full_name || '—';
+const userEmail = profile?.email || user.email;
+const role = profile?.role || user.user_metadata?.role || 'user';
+
+document.getElementById('profName').textContent = fullName;
+document.getElementById('profEmail').textContent = userEmail;
+document.getElementById('profRole').textContent = role;
+document.getElementById('profSince').textContent = new Date(user.created_at).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
+
+if (role === 'admin') {
+  document.getElementById('adminLink').style.display = 'inline';
+}
+
+if (!profile) {
+  await supabase.from('profiles').upsert({
+    id: user.id,
+    full_name: user.user_metadata?.full_name || '',
+    email: user.email,
+    role: user.user_metadata?.role || 'user'
+  });
 }
 
 // Logout
