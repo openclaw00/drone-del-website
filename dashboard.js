@@ -19,6 +19,18 @@ document.getElementById('profEmail').textContent = userEmail;
 document.getElementById('profRole').textContent = role;
 document.getElementById('profSince').textContent = new Date(user.created_at).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
 
+const initials = fullName !== '—'
+  ? fullName.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2)
+  : userEmail[0].toUpperCase();
+document.getElementById('profAvatar').textContent = initials;
+
+const isPro = profile?.subscription === 'pro';
+if (isPro) {
+  const pill = document.getElementById('planPill');
+  pill.textContent = 'Pro';
+  pill.classList.replace('free', 'pro');
+}
+
 if (role === 'admin') {
   document.getElementById('adminLink').style.display = 'inline';
 }
