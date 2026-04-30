@@ -96,7 +96,7 @@ body {
   letter-spacing: -0.03em;
 }
 
-.brand-mark { width: 32px; height: 32px; border-radius: 8px; object-fit: contain; }
+.brand-mark { width: 56px; height: 56px; border-radius: 8px; object-fit: contain; }
 .site-header nav { display: flex; gap: 20px; flex-wrap: wrap; }
 .site-header nav a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
 
