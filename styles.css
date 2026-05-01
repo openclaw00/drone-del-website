@@ -397,7 +397,7 @@ select option { background: #1a1a1f; color: var(--text); }
   grid-template-columns: 1fr 1.35fr;
   gap: 22px;
   margin-top: 48px;
-  align-items: start;
+  align-items: stretch;
 }
 
 .plan-tier {
@@ -406,7 +406,7 @@ select option { background: #1a1a1f; color: var(--text); }
   display: flex;
   flex-direction: column;
   position: relative;
-  transition: transform 300ms ease, box-shadow 300ms ease;
+  transition: transform 300ms ease, box-shadow 600ms ease, border-color 600ms ease;
 }
 
 .plan-tier:hover { transform: translateY(-5px); }
@@ -415,15 +415,18 @@ select option { background: #1a1a1f; color: var(--text); }
   border-color: rgba(255, 68, 68, 0.28);
   background: linear-gradient(145deg, rgba(255, 68, 68, 0.07) 0%, rgba(13, 13, 15, 0) 60%);
   box-shadow: 0 0 48px rgba(255, 68, 68, 0.1), var(--shadow);
+  overflow: visible;
+  padding-top: 48px;
 }
 
 .plan-pro-tier:hover {
   box-shadow: 0 0 64px rgba(255, 68, 68, 0.18), var(--shadow);
+  border-color: rgba(255, 68, 68, 0.45);
 }
 
 .tier-badge {
   position: absolute;
-  top: -13px;
+  top: -14px;
   left: 50%;
   transform: translateX(-50%);
   background: linear-gradient(135deg, var(--red), var(--red-deep));
