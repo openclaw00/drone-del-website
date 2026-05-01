@@ -301,8 +301,21 @@ h3 {
   flex-direction: column;
   justify-content: flex-end;
   min-height: 300px;
+  position: relative;
 }
 .service-featured h3 { font-size: clamp(1.5rem, 3vw, 2rem); margin-bottom: 10px; }
+.service-featured-img {
+  position: absolute;
+  top: 0; right: 0;
+  width: 60%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.18;
+  mask-image: linear-gradient(to left, rgba(0,0,0,0.7) 0%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0.7) 0%, transparent 100%);
+  pointer-events: none;
+}
 .service-card { border-radius: var(--radius-lg); padding: 26px; flex: 1; }
 .service-tag {
   display: inline-block;
