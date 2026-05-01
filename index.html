@@ -508,7 +508,7 @@
       const btn = document.getElementById('navAuthBtn');
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
-        btn.textContent = 'My account';
+        btn.textContent = 'MY ACCOUNT';
         btn.href = 'dashboard.html';
       }
 

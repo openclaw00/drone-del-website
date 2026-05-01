@@ -98,7 +98,7 @@ body {
 
 .brand-mark { width: 32px; height: 32px; border-radius: 6px; object-fit: contain; }
 .site-header nav { display: flex; gap: 20px; flex-wrap: wrap; }
-.site-header nav a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
+.site-header nav a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 400; text-transform: uppercase; letter-spacing: 0.08em; }
 
 .section { padding: 60px 0; }
 
@@ -173,7 +173,7 @@ h3 {
 .button {
   appearance: none; border: none; cursor: pointer; text-decoration: none;
   display: inline-flex; align-items: center; justify-content: center;
-  padding: 14px 18px; border-radius: 999px; font-weight: 700;
+  padding: 14px 18px; border-radius: 999px; font-weight: 400;
   transition: transform 220ms ease, box-shadow 220ms ease, background 220ms ease;
 }
 
