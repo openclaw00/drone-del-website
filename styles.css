@@ -48,7 +48,7 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 18px;
-  padding: 10px 24px;
+  padding: 6px 24px;
   margin-top: 0;
   background: rgba(13, 13, 15, 0.85);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -96,7 +96,7 @@ body {
   letter-spacing: -0.03em;
 }
 
-.brand-mark { width: 56px; height: 56px; border-radius: 8px; object-fit: contain; }
+.brand-mark { width: 32px; height: 32px; border-radius: 6px; object-fit: contain; }
 .site-header nav { display: flex; gap: 20px; flex-wrap: wrap; }
 .site-header nav a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
 
