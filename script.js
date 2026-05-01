@@ -7,7 +7,7 @@
   const SPACING = 9;
   const RADIUS = 1.0;
   const GLOW_RADIUS = 140;
-  const BASE_ALPHA = 0.13;
+  const BASE_ALPHA = 0.10;
   const SIZE_BOOST = 0.35;
 
   let mouse = { x: -9999, y: -9999 };
@@ -50,7 +50,7 @@
 
       ctx.beginPath();
       ctx.arc(dot.x, dot.y, r, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(255,255,255,' + alpha.toFixed(3) + ')';
+      ctx.fillStyle = 'rgba(224,48,48,' + alpha.toFixed(3) + ')';
       ctx.fill();
     }
 
@@ -165,9 +165,9 @@ function tick() {
       card.style.boxShadow = '';
     } else {
       card.style.boxShadow =
-        '0 0 0 1px rgba(255,59,59,' + (a * 0.2).toFixed(3) + '),' +
-        s.ox + 'px ' + s.oy + 'px 20px 2px rgba(255,59,59,' + (a * 0.7).toFixed(3) + '),' +
-        (s.ox * 0.4) + 'px ' + (s.oy * 0.4) + 'px 40px 6px rgba(255,100,80,' + (a * 0.25).toFixed(3) + ')';
+        '0 0 0 1px rgba(224,48,48,' + (a * 0.2).toFixed(3) + '),' +
+        s.ox + 'px ' + s.oy + 'px 20px 2px rgba(224,48,48,' + (a * 0.7).toFixed(3) + '),' +
+        (s.ox * 0.4) + 'px ' + (s.oy * 0.4) + 'px 40px 6px rgba(200,80,60,' + (a * 0.25).toFixed(3) + ')';
     }
   });
   requestAnimationFrame(tick);
