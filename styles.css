@@ -173,7 +173,8 @@ h3 {
 .button {
   appearance: none; border: none; cursor: pointer; text-decoration: none;
   display: inline-flex; align-items: center; justify-content: center;
-  padding: 14px 18px; border-radius: 999px; font-weight: 400;
+  padding: 14px 18px; border-radius: 999px; font-weight: 600;
+  font-family: inherit; font-size: inherit;
   transition: transform 220ms ease, box-shadow 220ms ease, background 220ms ease;
 }
 
