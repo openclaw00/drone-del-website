@@ -67,7 +67,7 @@
           </div>
         </div>
 
-        <div class="hero-panel glass reveal stagger-1">
+        <div class="hero-panel ops-surface reveal stagger-1">
           <div class="dashboard-card">
             <div class="dashboard-top">
               <div>
@@ -139,13 +139,13 @@
       </section>
 
 
-      <section id="services" class="section">
+      <section id="services" class="section services-section">
         <div class="section-heading reveal">
           <p class="eyebrow">Services</p>
           <h2>What we carry.</h2>
         </div>
         <div class="service-layout">
-          <article class="service-featured glass reveal stagger-1">
+          <article class="service-featured reveal stagger-1">
             <img src="pigler.png" alt="Drone delivery" class="service-featured-img">
             <span class="service-tag">Medical &amp; Healthcare</span>
             <h3>Express medical delivery</h3>
@@ -156,13 +156,13 @@
               <span>Sub-15 min</span>
             </div>
           </article>
-          <div class="service-stack">
-            <article class="service-card glass reveal stagger-2">
+          <div class="service-stack reveal stagger-2">
+            <article class="service-card">
               <span class="service-tag">Business</span>
               <h3>Business courier</h3>
               <p>Contracts, electronics, and high-priority packages across the district.</p>
             </article>
-            <article class="service-card glass reveal stagger-3">
+            <article class="service-card">
               <span class="service-tag">E-commerce</span>
               <h3>On-demand last mile</h3>
               <p>Same-day fulfillment for retail orders and premium deliveries.</p>
@@ -206,16 +206,16 @@
 
 
 
-      <section id="pricing" class="section plans-section">
+      <section id="pricing" class="section plans-section band-section">
         <div class="section-heading reveal">
           <p class="eyebrow">Pricing</p>
           <h2>Start free. Fly further with Pro.</h2>
-          <p class="section-intro">No hidden fees. Pay per delivery or subscribe for priority access, a bigger radius, and late-night drops.</p>
+          <p class="section-intro">No hidden fees. Pay per delivery or subscribe for priority access, a bigger radius, and 24/7 dispatch.</p>
         </div>
         <div class="plans-grid">
 
           <!-- Free -->
-          <div class="plan-tier glass reveal stagger-1">
+          <div class="plan-tier reveal stagger-1">
             <span class="tier-label">Free</span>
             <div class="tier-price-row">
               <span class="tier-price">0 ₫</span>
@@ -235,7 +235,7 @@
           </div>
 
           <!-- Pro -->
-          <div class="plan-tier plan-pro-tier glass reveal stagger-2">
+          <div class="plan-tier plan-pro-tier reveal stagger-2">
             <span class="tier-badge">★ Most popular</span>
             <span class="tier-label tier-label-pro">Pro</span>
             <div class="tier-price-row">
@@ -244,11 +244,11 @@
             </div>
             <div class="tier-divider"></div>
             <ul class="tier-perks">
-              <li class="has"><strong>20 free deliveries</strong> per month</li>
+              <li class="has"><strong>3 free deliveries</strong> per month</li>
               <li class="has">Extended <strong>25 km</strong> delivery radius</li>
               <li class="has">Live GPS drone tracking (10 s updates)</li>
               <li class="has"><strong>Priority dispatch</strong> — under 3 min queue</li>
-              <li class="has">Late-night service <strong>22:00 – 05:00</strong></li>
+              <li class="has"><strong>24/7</strong> service coverage</li>
               <li class="has">Cold-chain &amp; fragile cargo handling</li>
               <li class="has">Dedicated human support line</li>
               <li class="has">Monthly delivery analytics report</li>
@@ -257,7 +257,7 @@
           </div>
 
         </div>
-        <p class="pricing-note">Per-delivery rates start from 35,000 ₫. Final quote depends on distance, weight, and priority level — see the booking form for an instant estimate.</p>
+        <p class="pricing-note">Per-delivery rates start from 35,000 ₫. Final quote depends on distance, weight, and priority level. See the booking form for an instant estimate.</p>
       </section>
 
       <section class="section partners-section">
@@ -282,14 +282,14 @@
         </div>
       </section>
 
-      <section id="booking" class="section booking-section">
+      <section id="booking" class="section booking-section dispatch-section">
         <div class="section-heading reveal">
           <p class="eyebrow">Booking</p>
           <h2>Request a drone delivery.</h2>
           <p class="section-intro">Use this form to simulate a booking flow for clients who need immediate dispatch or scheduled delivery.</p>
         </div>
         <div class="booking-layout">
-          <form class="booking-form glass reveal stagger-1" id="bookingForm">
+          <form class="booking-form dispatch-form reveal stagger-1" id="bookingForm">
             <div class="form-grid">
               <label>
                 Pickup location
@@ -300,10 +300,23 @@
                 <input type="text" name="dropoff" placeholder="e.g. Vinmec Hospital, Tay Ho" required />
               </label>
               <label>
+                Delivery type
+                <select name="deliveryType" required>
+                  <option value="">Choose delivery type</option>
+                  <option>UrgentWing priority</option>
+                  <option>Medical delivery</option>
+                  <option>Food delivery</option>
+                  <option>Business courier</option>
+                  <option>Retail package</option>
+                  <option>Documents / person-to-person</option>
+                </select>
+              </label>
+              <label>
                 Package type
                 <select name="packageType">
                   <option>Documents</option>
                   <option>Medical item</option>
+                  <option>Food parcel</option>
                   <option>Electronics</option>
                   <option>Retail package</option>
                 </select>
@@ -333,32 +346,42 @@
               Delivery notes
               <textarea name="notes" rows="5" placeholder="Gate instructions, item sensitivity, recipient details, handling notes..."></textarea>
             </label>
+            <p class="booking-helper" id="deliveryTypeHelp">
+              Website requests are for person-to-person drone deliveries. For restaurant food orders, place the food order in the app, then use this form only for direct handoff delivery details.
+            </p>
             <div class="form-actions">
               <button type="submit" class="button primary">Request dispatch</button>
               <p id="bookingMsg" style="margin-top:0.75rem;font-size:0.9rem;"></p>
             </div>
           </form>
 
-          <aside class="quote-card glass reveal stagger-2">
+          <aside class="quote-card quote-empty dispatch-receipt reveal stagger-2" id="quoteCard">
             <p class="card-label">Estimated quote</p>
-            <h3>Express route preview</h3>
-            <div class="quote-row">
-              <span>Base dispatch (UrgentWing)</span>
-              <strong>120,000 &#8363;</strong>
+            <h3 id="quoteTitle">Enter delivery details</h3>
+            <p id="quoteIntro">Add pickup, dropoff, delivery type, weight, speed, and contact phone to preview an estimate.</p>
+            <div class="quote-details" id="quoteDetails" hidden>
+              <div class="quote-row">
+                <span id="quoteBaseLabel">Base dispatch</span>
+                <strong id="quoteBaseValue">0 &#8363;</strong>
+              </div>
+              <div class="quote-row">
+                <span id="quoteHandlingLabel">Handling</span>
+                <strong id="quoteHandlingValue">0 &#8363;</strong>
+              </div>
+              <div class="quote-row">
+                <span id="quoteSpeedLabel">Speed</span>
+                <strong id="quoteSpeedValue">0 &#8363;</strong>
+              </div>
+              <div class="quote-row total">
+                <span>Estimated total</span>
+                <strong id="quoteTotalValue">0 &#8363;</strong>
+              </div>
+              <ul>
+                <li id="quoteServiceNote">Person-to-person delivery request</li>
+                <li>Live status updates</li>
+                <li>Operator support included</li>
+              </ul>
             </div>
-            <div class="quote-row">
-              <span>Priority handling</span>
-              <strong>65,000 &#8363;</strong>
-            </div>
-            <div class="quote-row total">
-              <span>Estimated total</span>
-              <strong>185,000 &#8363;</strong>
-            </div>
-            <ul>
-              <li>Live status updates</li>
-              <li>Proof of completion</li>
-              <li>Operator support included</li>
-            </ul>
           </aside>
         </div>
       </section>
@@ -509,7 +532,7 @@
           tracking_id,
           pickup: form.pickup.value,
           dropoff: form.dropoff.value,
-          package_type: form.packageType.value,
+          package_type: `${form.deliveryType.value} - ${form.packageType.value}`,
           weight: form.weight.value,
           speed: form.speed.value,
           phone: form.phone.value,
@@ -524,6 +547,7 @@
           msgEl.style.color = '#4ade80';
           msgEl.textContent = `Order placed! Tracking ID: ${tracking_id}`;
           form.reset();
+          if (window.updateQuotePreview) window.updateQuotePreview();
         }
       });
 

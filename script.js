@@ -181,7 +181,81 @@ const trackButton   = document.getElementById('trackButton');
 
 const buildTrackingId = () => 'SKY-' + Math.floor(100000 + Math.random() * 900000);
 
+const formatVnd = (amount) => amount.toLocaleString('vi-VN') + ' ₫';
+
+const quoteRules = {
+  'UrgentWing priority': { base: 120000, handling: 65000, note: 'UrgentWing priority dispatch' },
+  'Medical delivery': { base: 95000, handling: 55000, note: 'Medical handling request' },
+  'Food delivery': { base: 70000, handling: 25000, note: 'Food handoff only. Restaurant orders must be placed in the app.' },
+  'Business courier': { base: 80000, handling: 30000, note: 'Business courier handoff' },
+  'Retail package': { base: 75000, handling: 35000, note: 'Retail package handoff' },
+  'Documents / person-to-person': { base: 60000, handling: 15000, note: 'Person-to-person document delivery' }
+};
+
+const weightFees = {
+  'Under 1 kg': 0,
+  '1 - 3 kg': 20000,
+  '3 - 5 kg': 45000
+};
+
+const speedFees = {
+  'Immediate priority': 40000,
+  'Same day': 15000,
+  'Scheduled window': 0
+};
+
+function updateQuotePreview() {
+  if (!bookingForm) return;
+
+  const formData = new FormData(bookingForm);
+  const pickup = String(formData.get('pickup') || '').trim();
+  const dropoff = String(formData.get('dropoff') || '').trim();
+  const deliveryType = String(formData.get('deliveryType') || '').trim();
+  const weight = String(formData.get('weight') || '').trim();
+  const speed = String(formData.get('speed') || '').trim();
+  const phone = String(formData.get('phone') || '').trim();
+
+  const quoteCard = document.getElementById('quoteCard');
+  const quoteDetails = document.getElementById('quoteDetails');
+  const quoteIntro = document.getElementById('quoteIntro');
+  const quoteTitle = document.getElementById('quoteTitle');
+  if (!quoteCard || !quoteDetails || !quoteIntro || !quoteTitle) return;
+
+  const hasCoreDetails = pickup && dropoff && deliveryType && weight && speed && phone;
+  quoteCard.classList.toggle('quote-empty', !hasCoreDetails);
+  quoteDetails.hidden = !hasCoreDetails;
+
+  if (!hasCoreDetails) {
+    quoteTitle.textContent = 'Enter delivery details';
+    quoteIntro.textContent = 'Add pickup, dropoff, delivery type, weight, speed, and contact phone to preview an estimate.';
+    return;
+  }
+
+  const rule = quoteRules[deliveryType] || quoteRules['Documents / person-to-person'];
+  const weightFee = weightFees[weight] || 0;
+  const speedFee = speedFees[speed] || 0;
+  const handlingTotal = rule.handling + weightFee;
+  const total = rule.base + handlingTotal + speedFee;
+
+  quoteTitle.textContent = deliveryType + ' preview';
+  quoteIntro.textContent = pickup + ' to ' + dropoff;
+  document.getElementById('quoteBaseLabel').textContent = 'Base dispatch';
+  document.getElementById('quoteBaseValue').textContent = formatVnd(rule.base);
+  document.getElementById('quoteHandlingLabel').textContent = 'Handling + weight';
+  document.getElementById('quoteHandlingValue').textContent = formatVnd(handlingTotal);
+  document.getElementById('quoteSpeedLabel').textContent = speed;
+  document.getElementById('quoteSpeedValue').textContent = formatVnd(speedFee);
+  document.getElementById('quoteTotalValue').textContent = formatVnd(total);
+  document.getElementById('quoteServiceNote').textContent = rule.note;
+}
+
+window.updateQuotePreview = updateQuotePreview;
+
 if (bookingForm) {
+  bookingForm.addEventListener('input', updateQuotePreview);
+  bookingForm.addEventListener('change', updateQuotePreview);
+  updateQuotePreview();
+
   bookingForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const formData = new FormData(bookingForm);
@@ -190,6 +264,7 @@ if (bookingForm) {
       id:          trackingId,
       pickup:      formData.get('pickup')      || '',
       dropoff:     formData.get('dropoff')     || '',
+      deliveryType:formData.get('deliveryType')|| '',
       packageType: formData.get('packageType') || '',
       weight:      formData.get('weight')      || '',
       speed:       formData.get('speed')       || '',
